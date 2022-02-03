@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Article;
+use App\Models\Gamme;
 
 class GammeController extends Controller
 {
@@ -13,7 +15,9 @@ class GammeController extends Controller
      */
     public function index()
     {
-        //
+        $gammes =  Gamme::all();
+        $gammes->load('articles');
+        return view('gamme', compact('gammes'));
     }
 
     /**
@@ -43,9 +47,11 @@ class GammeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+
+        
+
     }
 
     /**
