@@ -16,3 +16,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::resource('/adresse', \App\Http\Controllers\AdresseController::class);
+Route::resource('/article', \App\Http\Controllers\ArticleController::class);
+Route::resource('/avis', \App\Http\Controllers\AvisController::class);
+Route::resource('/commande', \App\Http\Controllers\CommandeController::class);
+Route::resource('/favori', \App\Http\Controllers\favoriController::class);
+Route::resource('/gamme', \App\Http\Controllers\GammeController::class);
+Route::resource('/promotion', \App\Http\Controllers\PromotionController::class);
+Route::resource('/user', \App\Http\Controllers\UserController::class);
