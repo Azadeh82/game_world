@@ -128,7 +128,7 @@ Vendu selon disponibilité.",
         DB::table('articles')->insert([
             'gamme_id' => 2,
             'nom' => 'Hello le Dino',
-            'description_courte' => "Une peluche Hello le Dino.",
+            'description_courte' => "Une peluche Hello le Dino toute douce à adopter ....",
             'description_longue' => "Une peluche Hello le Dino toute douce à adopter ... Cet adorable dinosaure tout bleu marine a quitté la préhistoire pour la chambre de bébé.
 
             Ensemble, ils partageront de tendres instants de complicité.
@@ -199,7 +199,7 @@ Vendu selon disponibilité.",
 
         Article::create([
             'nom' => 'Sauve moutons',
-            'description_courte' => 'Sauve moutons et un jeu coopératif',
+            'description_courte' => 'Sauve moutons et un jeu coopératif qui véhicule des valeurs d’entraide',
             'description_longue' => "Sauve moutons et un jeu coopératif qui véhicule des valeurs d’entraide et de partage, essentielles pour bien grandir.
 
             Vous devez aider le berger à guider son troupeau jusqu’aux tendres pâturages des sommets. Mais attention, le loup rôde et il a vraiment très faim !

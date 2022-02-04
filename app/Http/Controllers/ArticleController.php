@@ -14,7 +14,8 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        //
+        $articles =  Article::all();
+        return view('article', compact('articles'));
     }
 
     /**
@@ -22,7 +23,7 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create() // affiche le formulaire d'une creation d'un element
     {
         //
     }
@@ -33,7 +34,7 @@ class ArticleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request) // créer l'article
     {
         //
     }
@@ -44,9 +45,9 @@ class ArticleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show(Article $article) // afficher un article en particulier (afficher une ressource unique)
     {
- 
+        return view('detail', compact('article'));
     }
 
     /**
