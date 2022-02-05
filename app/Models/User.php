@@ -18,7 +18,8 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'nom',
+        'prenom',
         'email',
         'password',
     ];
@@ -43,29 +44,26 @@ class User extends Authenticatable
     ];
 
 
-public function adresses(){
-    return $this->hasMany(Adresse::class);
+    public function adresses(){
+        return $this->hasMany(Adresse::class);
 
-}
+    }
 
-public function avis(){
-    return $this->hasMany(Avis::class);
-}
+    public function avis(){
+        return $this->hasMany(Avis::class);
+    }
 
-public function favoris(){
-    return $this->belongsToMany(Article::class , 'favoris');
-}
+    public function favoris(){
+        return $this->belongsToMany(Article::class , 'favoris');
+    }
 
-public function commandes(){
-    return $this->hasMany(Commande::class);
-}
+    public function commandes(){
+        return $this->hasMany(Commande::class);
+    }
 
-public function role(){
-    return $this->belongsTo(User::class);
-}
-
-
-
+    public function role(){
+        return $this->belongsTo(User::class);
+    }
 
 }
 
