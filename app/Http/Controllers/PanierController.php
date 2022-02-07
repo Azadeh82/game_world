@@ -29,12 +29,14 @@ class PanierController extends Controller
 		$article_details = [
 			'nom' => $article->nom,
 			'prix' => $article->prix,
+			'image' => $article->image,
 			'quantite' => $request->quantite
 		];
 		
 		$panier[$article->id] = $article_details; // On ajoute ou on met à jour le produit au panier
 		session()->put("panier", $panier); // On enregistre le panier
     	// Redirection vers le panier avec un message
+		$panier = session()->get("panier");
 		
     	return redirect()->route("panier.show")->withMessage("Produit ajouté au panier");
 	

@@ -37,9 +37,6 @@
 					<td>
 						<strong><a href="{{ route('article.show', $key) }}" title="Afficher le produit">{{ $article['nom'] }}</a></strong>
 					</td>
-
-
-
 					<td>{{ $article['prix'] }} €</td>
 
 					<td style="width: 18%;">
@@ -64,9 +61,6 @@
 						<a href="{{ route('panier.remove', $key) }}" class="button-26" title="Retirer le produit du panier" style="text-decoration:none; ">Supprimer</a>
 					</td>
 				</tr>
-
-
-
 				@endforeach
 				<tr colspan="2">
 					<td colspan="4">Total général</td>
@@ -81,12 +75,8 @@
 	</div>
 
 	<!-- Lien pour vider le panier -->
-	<div class="row">
-		<div class="col-12 d-flex justify-content-center">
-			<a class="button-24 me-5" href="{{ route('panier.empty') }}" title="Retirer tous les produits du panier" style="text-decoration:none; ">Vider le panier</a>
-			<a class="button-27" href="{{ route('panier.show') }}" title="acceder a la page validation" style="text-decoration:none; ">Valider</a>
-		</div>
-	</div>
+	<a class="button-24" href="{{ route('panier.empty') }}" title="Retirer tous les produits du panier" style="text-decoration:none; ">Vider le panier</a>
+
 	@else
 	<div class="alert alert-info">Aucun produit au panier</div>
 	@endif
