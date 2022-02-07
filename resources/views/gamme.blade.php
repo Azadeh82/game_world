@@ -27,10 +27,13 @@ gammes
                         <p class="card-text courte">{{$article->description_courte}}</p>
                         <!-- on transmet lensemble des information de article (objet article) via la route-->
                         <a href="{{ route('article.show', $article) }}" class="button-62">Details produits</a>
-                        <a href="{{ route('article.store') }}" class="button-63 mt-3">Ajouter au panier</a>
-                        <form action="aucune" method="post">
+                        
+                        <form action="{{ route('panier.add', $article) }}" method="post">
+                            @csrf
                             <input class="form-control mt-3 w-50 mx-auto" type="number" name="quantite" value='1'>
+                            <input type="submit" value="Ajouter au panier" class="button-63 mt-3">
                         </form>
+
                     </div>
                 </div>
 

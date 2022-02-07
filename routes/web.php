@@ -33,10 +33,10 @@ Route::resource('/user', \App\Http\Controllers\UserController::class);
 // Route::get('article/remove/{product}', "ArticleController@remove")->name('article.remove');
 // Route::get('article/empty', "ArticleController@empty")->name('article.empty');
 
-Route::get('panier', "PanierController@show")->name('panier.show');
-Route::post('panier/add/{product}', "PanierController@add")->name('panier.add');
-Route::get('panier/remove/{product}', "PanierController@remove")->name('panier.remove');
-Route::get('panier/empty', "PanierController@empty")->name('panier.empty');
+Route::get('panier', [App\Http\Controllers\PanierController::class, 'show'])->name('panier.show');
+Route::post('panier/add/{article}', [App\Http\Controllers\PanierController::class, 'add'])->name('panier.add');
+Route::get('panier/remove/{article}',[App\Http\Controllers\PanierController::class, 'remove'])->name('panier.remove');
+Route::get('panier/empty', [App\Http\Controllers\PanierController::class, 'empty'])->name('panier.empty');
 
 
 

@@ -1,10 +1,6 @@
-extends("layouts.app")
+@extends("layouts.app")
 @section("content")
 <div class="container">
-
-	@if (session()->has('message'))
-	<div class="alert alert-info">{{ session('message') }}</div>
-	@endif
 
 	@if (session()->has("panier"))
 	<h1>Mon panier</h1>
@@ -25,39 +21,42 @@ extends("layouts.app")
 				@php $total = 0 @endphp
 
 				<!-- On parcourt les produits du panier en session : session('panier') -->
-				@foreach (session("panier") as $key => $item)
+				@foreach (session("panier") as $key => $article)
 
 					<!-- On incrémente le total général par le total de chaque produit du panier -->
-					@php $total += $item['price'] * $item['quantity'] @endphp
+					@php $total += $article['prix'] * $article['quantite'] @endphp
 					<tr>
 						<td>{{ $loop->iteration }}</td>
 						<td>
-							<strong><a href="{{ route('article.show', $key) }}" title="Afficher le produit" >{{ $item['name'] }}</a></strong>
+							<strong><a href="{{ route('article.show', $key) }}" title="Afficher le produit" >{{ $article['nom'] }}</a></strong>
 						</td>
-						<td>{{ $item['price'] }} $</td>
+						<td>{{ $article['prix'] }} €</td>
 						<td>
 							<!-- Le formulaire de mise à jour de la quantité -->
 							<form method="POST" action="{{ route('panier.add', $key) }}" class="form-inline d-inline-block" >
 							{{ csrf_field() }}
-								<input type="number" name="quantity" placeholder="Quantité ?" value="{{ $item['quantity'] }}" class="form-control mr-2" style="width: 80px" >
+								<input type="number" name="quantite" placeholder="Quantité ?" value="{{ $article['quantite'] }}" class="form-control mr-2" style="width: 80px" >
 								<input type="submit" class="btn btn-primary" value="Actualiser" />
 							</form>
 						</td>
 						<td>
 							<!-- Le total du produit = prix * quantité -->
-							{{ $item['price'] * $item['quantity'] }} $
+							{{ $article['prix'] * $article['quantite'] }} €
 						</td>
 						<td>
 							<!-- Le Lien pour retirer un produit du panier -->
 							<a href="{{ route('panier.remove', $key) }}" class="btn btn-outline-danger" title="Retirer le produit du panier" >Retirer</a>
 						</td>
 					</tr>
+					
+					
+
 				@endforeach
 				<tr colspan="2" >
 					<td colspan="4" >Total général</td>
 					<td colspan="2">
 						<!-- On affiche total général -->
-						<strong>{{ $total }} $</strong>
+						<strong>{{ $total }} €</strong>
 					</td>
 				</tr>
 			</tbody>
