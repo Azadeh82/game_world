@@ -57,6 +57,13 @@ GameWorld - Inscription
                             </div>
                         </div>
 
+                        <div class="row">
+                            <label for="password" class="col-md-4 col-form-label text-md-end"></label>
+                            <div class="col-md-6">
+                                <small id="password" class="form-text text-muted">Entre 8 et 15 caractères, minimum 1 lettre, 1 chiffre et 1 caractère spécial</small>
+                            </div>
+                        </div>
+                        
                         <div class="row mb-3">
                             <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
 
