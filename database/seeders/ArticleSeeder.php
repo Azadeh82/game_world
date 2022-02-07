@@ -45,23 +45,23 @@ class ArticleSeeder extends Seeder
 
             La marque YCOO propose une large collection de robots télécommandés et interactifs pour tous les enfants. Les robots de combat vous feront vivre de l’action à couper le souffle ! Les ingénieurs en herbe trouveront leur bonheur avec les robots programmables. Enfin si vous adorez les animaux, les robots chiens ou dinosaures sont faits pour vous !  
 
-            Maze Breaker est un robot adorable et interactif au look futuriste !
+Maze Breaker est un robot adorable et interactif au look futuriste !
 
-            Il avance dans toutes les directions, tourne en détectant les obstacles et se contrôle via une application Smartphone. Lorsqu'il rencontre un autre Maze Breaker, il arrive même à interagir avec lui. Il peut également enregistrer la voix de votre enfant et répéter ce qu'il lui dit avec une voix de robot pour passer un bon moment de rigolade.
+Il avance dans toutes les directions, tourne en détectant les obstacles et se contrôle via une application Smartphone. Lorsqu'il rencontre un autre Maze Breaker, il arrive même à interagir avec lui. Il peut également enregistrer la voix de votre enfant et répéter ce qu'il lui dit avec une voix de robot pour passer un bon moment de rigolade.
 
-            Votre enfant va pouvoir s'amuser à lui réaliser des labyrinthes pour le tester ou dessiner une ligne qu'il suivra ! 
+Votre enfant va pouvoir s'amuser à lui réaliser des labyrinthes pour le tester ou dessiner une ligne qu'il suivra ! 
 
-            Il dispose aussi d'effets sonores et lumineux : ses yeux LED changent de couleur.
+Il dispose aussi d'effets sonores et lumineux : ses yeux LED changent de couleur.
 
-            Nécessite 2 piles LR03 non incluses. La boîte contient un robot et un labyrinthe.
+Nécessite 2 piles LR03 non incluses. La boîte contient un robot et un labyrinthe.
 
-            Dimension du produit : 6.5 cm x 12 cm x 6 cm.
+Dimension du produit : 6.5 cm x 12 cm x 6 cm.
 
-            Fait partie d'un assortiment de différents modèles.
+Fait partie d'un assortiment de différents modèles.
 
-            Vendu à l'unité.
+Vendu à l'unité.
 
-            Vendu selon disponibilité.",
+Vendu selon disponibilité.",
             'prix' => 22.99,
             'image' => 'robot.png',
             'stock' => 15,

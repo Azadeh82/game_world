@@ -32,3 +32,13 @@ Route::post('/resetpassword', [\App\Http\Controllers\UserController::class, 'res
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+// Route pour le panier (pour pouvoir supprimer, modifier, ajouter ...)
+
+Route::get('panier', [App\Http\Controllers\PanierController::class, 'show'])->name('panier.show');
+Route::post('panier/add/{article}', [App\Http\Controllers\PanierController::class, 'add'])->name('panier.add');
+Route::get('panier/remove/{article}',[App\Http\Controllers\PanierController::class, 'remove'])->name('panier.remove');
+Route::get('panier/empty', [App\Http\Controllers\PanierController::class, 'empty'])->name('panier.empty');
+
+
+
