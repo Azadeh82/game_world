@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Promotion;
 use Illuminate\Http\Request;
+use App\Models\Article;
 
 class HomeController extends Controller
 {
@@ -38,10 +39,19 @@ class HomeController extends Controller
             $promotion = null;
         }
 
-        $articleCelebity= Promotion::with('articles');
 
-        return view('home' , compact('promotion' , 'articleCelebity'));
+        $topRatedArticles = Article::orderByDesc('note')
+        ->limit(3)
+        ->with(['promotions'=>function($query){
+            $date= date("Y-m-d");
+            $query
+            ->whereDate('date_debut', '<=' , $date)
+            ->whereDate('date_fin' , '>=' , $date)
+            ->get();
+        }])
+        ->get();
+    
+
+        return view('home' , compact('promotion' , 'topRatedArticles'));
     }
-
-
 }

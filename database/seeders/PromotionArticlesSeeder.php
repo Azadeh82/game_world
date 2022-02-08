@@ -30,6 +30,17 @@ class PromotionArticlesSeeder extends Seeder
         ]);
 
         DB::table('promotion_articles')->insert([
+            'promotion_id' => 1,
+            'article_id' => 5,
+        ]);
+
+        DB::table('promotion_articles')->insert([
+            'promotion_id' => 1,
+            'article_id' => 6,
+        ]);
+        
+
+        DB::table('promotion_articles')->insert([
             'promotion_id' => 2,
             'article_id' => 4,
         ]);
@@ -38,7 +49,7 @@ class PromotionArticlesSeeder extends Seeder
             'promotion_id' => 2,
             'article_id' => 5,
         ]);
-        
+
         DB::table('promotion_articles')->insert([
             'promotion_id' => 2,
             'article_id' => 6,
