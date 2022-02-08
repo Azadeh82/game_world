@@ -32,7 +32,6 @@ class HomeController extends Controller
         ->whereDate('date_debut', '<=' , $date)
         ->whereDate('date_fin' , '>=' , $date)
         ->get();
-
         if (isset($promotion[0])) {
             $promotion = $promotion[0];
         } else {
@@ -50,7 +49,7 @@ class HomeController extends Controller
             ->get();
         }])
         ->get();
-    
+        
 
         return view('home' , compact('promotion' , 'topRatedArticles'));
     }

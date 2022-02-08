@@ -1,34 +1,36 @@
 @extends('layouts.app')
 
 @section('title')
-GameWorld - Acceuil
+GameWorld - Accueil
 @endsection
 
 @section('content')
     <div class="container">
         <div class="card bg-dark text-white">
-            <img src="/images/1.png" class="card-img" alt="...">
+            <img src="/images/1.png" class="card-img" alt="img_accueil">
         </div>
     </div>
 
     <div class="container text-center my-md-5">
-        <div class="row">
-            <h3>{{$promotion->nom}}</h3>
-            <h5></h5>
-            <h6>du {{$promotion->date_debut}} au {{$promotion->date_fin}}</h6>
+        <div class="row border border-3 py-md-5">
+            <h1 class="display-1 text-danger fw-bolder text-uppercase my-md-5">{{$promotion->nom}}</h1>
+            <h2 class="display-4 text-danger fw-bolder">-{{$promotion->reduction. '%' }} sur une selection</h2>
+            <h2 class="fs-1 fw-bolder fst-italic my-md-5">du {{ date('d/m', strtotime($promotion->date_debut)) }} au
+                {{ date('d/m/y', strtotime($promotion->date_fin)) }}</h2>
+
             @foreach ($promotion->articles as $article)
             <div class="col d-flex justify-content-center">
-                <div class="card mx-md-3" style="width: 18rem;">
+                <div class="card mx-md-3" style="width: 22rem;">
                     <img src="/images/{{$article->image}}" class="card-img-top" alt="img_article">
                     <div class="card-body">
-                        <h5 class="card-title">{{$article->nom}}</h5>
-                        <p class="card-text">{{$article->description_courte}}</p>
+                        <h5 class="card-title fw-bolder fs-2 text-primary">{{$article->nom}}</h5>
+                        <p class="card-text fw-bolder fs-4">{{$article->description_courte}}</p>
                     </div>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item">-{{$promotion->reduction. '%' }}</li>
-                        <li class="list-group-item text-decoration-line-through">{{$article->prix}}€</li>
+                        <li class="list-group-item display-6 text-danger fw-bolder">-{{$promotion->reduction. '%' }}</li>
+                        <li class="list-group-item text-decoration-line-through fs-3">{{$article->prix}}€</li>
                         <li class="list-group-item">
-                            <span class="text-danger font-weight-bold">
+                            <span class=" display-6 text-danger fw-bolder">
                             @php
                                 $newPrice = $article->prix - $article->prix * ($promotion->reduction / 100);
                                 echo number_format($newPrice, 2);
@@ -48,43 +50,45 @@ GameWorld - Acceuil
                 </div>
             </div> 
             @endforeach
-        <div>
-            <button class="button-25 my-md-5 ">voir toutes les promotions</button>
-        </div>
+    </div>
 
-        <div class="row text-center mx-md-3 py-md-5 cadrearticlenote">
-            <h3>Produits les mieux notés</h3>
-            
+    <div>
+        <a href="{{ route('promotion.index') }}" class="button-25 my-md-5 fs-3">VOIR TOUTES LES PROMOTIONS</a>
+    </div>
+
+    <div class="container text-center my-md-5 ">
+        <div class="row text-center mx-md-3 py-md-5 border border-3 bg-success bg-opacity-25">
+            <h1 class="display-3 text-danger fw-bolder text-uppercase my-md-5">Produits les mieux notés</h1>
             @foreach($topRatedArticles as $topRatedArticle)
             <div class="col d-flex justify-content-center">
-                <div class="card mx-md-3" style="width: 18rem;">
+                <div class="card mx-md-3" style="width: 22rem;">
                     <img src="/images/{{$topRatedArticle->image}}" class="card-img-top" alt="img_article">
                     <div class="card-body">
-                        <h5 class="card-title">#{{ $loop->iteration }}</h5>
-                        <h5 class="card-title">{{$topRatedArticle->note}}</h5>
-                        <h5 class="card-title">{{$topRatedArticle->nom}}</h5>
-                        <p class="card-text">{{$topRatedArticle->description_courte}}</p>
+                        <h5 class="card-title fw-bolder fs-4">#{{ $loop->iteration }}</h5>
+                        <h5 class="card-title display-6 text-danger fw-bolder">Note: {{$topRatedArticle->note}}</h5>
+                        <h5 class="card-title fw-bolder fs-3 text-primary">{{$topRatedArticle->nom}}</h5>
+                        <p class="card-text fw-bolder fs-4">{{$topRatedArticle->description_courte}}</p>
                     </div>
-                  @if(isset($topRatedArticle->promotions[0]))
-                   <ul class="list-group list-group-flush">
-                    <li class="list-group-item">-{{$promotion->reduction. '%' }}</li>
-                    <li class="list-group-item text-decoration-line-through">{{$article->prix}}€</li>
-                    <li class="list-group-item">
-                        <span class="text-danger font-weight-bold">
-                        @php
-                            $newPrice = $article->prix - $article->prix * ($promotion->reduction / 100);
-                            echo number_format($newPrice, 2);
-                        @endphp
-                        €</span>
-                    </li>
-                    @else 
-                    <li class="list-group-item">{{$article->prix}}€</li>
+                    @if(isset($topRatedArticle->promotions[0]))
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item display-6 text-danger fw-bolder">-{{$topRatedArticle->promotions[0]->reduction. '%' }}</li>
+                        <li class="list-group-item text-decoration-line-through fs-3">{{$topRatedArticle->prix}}€</li>
+                        <li class="list-group-item">
+                            <span class="display-6 text-danger fw-bolder">
+                            @php
+                                $newPrice = $topRatedArticle->prix - $topRatedArticle->prix * ($promotion->reduction / 100);
+                                echo number_format($newPrice, 2);
+                            @endphp
+                            €</span>
+                        </li>
+                        @else 
+                        <li class="list-group-item fs-3">{{$topRatedArticle->prix}}€</li>
                     </ul>
                     @endif
-               
+            
                     <div class="card-body d-flex flex-column mx-md-5">
-                        <a href="{{ route('article.show', $article) }}" class="button-62">Details produits</a>
-                        <form action="{{ route('panier.add', $article) }}" method="post">
+                        <a href="{{ route('article.show', $topRatedArticle) }}" class="button-62">Details produits</a>
+                        <form action="{{ route('panier.add', $topRatedArticle) }}" method="post">
                             @csrf
                             <input class="form-control mt-3 w-50 mx-auto" type="number" name="quantite"  min="1" max="10" value='1'>
                             <input type="submit" value="Ajouter au panier" class="button-63 mt-3">
@@ -93,6 +97,9 @@ GameWorld - Acceuil
                 </div>
             </div>
             @endforeach
+            <div>
+                <a href="{{ route('article.index') }}" class="button-25 my-md-5 fs-3">VOIR TOUT LE CATALOGUE</a>
+            </div>
         </div>
     </div>
 

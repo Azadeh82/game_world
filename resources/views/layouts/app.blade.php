@@ -54,7 +54,14 @@
                         @else
 
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('user.show',  $user = auth()->user()->id) }}">{{ __('CompteClient') }}</a>
+                                <a class="nav-link fw-bolder fs-5" href="{{ route('home') }}">{{ __('ACCUEIL') }}</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link fw-bolder fs-5" href="{{ route('promotion.index') }}">{{ __('PROMOTIONS') }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link fw-bolder fs-5" href="{{ route('user.show',  $user = auth()->user()->id) }}">{{ __('COMPTECLIENT') }}</a>
                             </li>
 
                             <li class="nav-item dropdown">
@@ -62,8 +69,8 @@
                                     {{ Auth::user()->name }}
                                 </a>
 
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                <div class="dropdown-menu dropdown-menu-end " aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item " href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}

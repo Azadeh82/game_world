@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Promotion;
 
 class PromotionController extends Controller
 {
@@ -13,7 +14,10 @@ class PromotionController extends Controller
      */
     public function index()
     {
-        //
+
+        $promotions = Promotion::whereDate('date_fin', '>=',  date('Y-m-d'))->orderBy('date_debut')->get();
+
+        return view('promotion.index' , compact('promotions'));
     }
 
     /**
@@ -40,10 +44,9 @@ class PromotionController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
         //
     }

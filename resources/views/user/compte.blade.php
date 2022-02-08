@@ -10,7 +10,7 @@ GameWorld - Compte Client
   <div class="row justify-content-center">
       <div class="col-md-8">
           <div class="card">
-              <div class="card-header">{{ __('Mes Information') }}</div>
+              <div class="card-header fs-5 fw-bolder">{{ __('Mes Information') }}</div>
 
               <div class="card-body">
                   <form method="POST" action="{{ route('user.update' , $user) }}">
@@ -47,7 +47,7 @@ GameWorld - Compte Client
 
                       <div class="row mb-0">
                           <div class="col-md-6 offset-md-4">
-                              <button type="submit" class="btn btn-primary">
+                              <button type="submit" class="btn btn-primary text-light">
                                   {{ __('modifier') }}
                               </button>
                           </div>
@@ -64,7 +64,7 @@ GameWorld - Compte Client
   <div class="row justify-content-center my-5">
       <div class="col-md-8">
           <div class="card">
-              <div class="card-header">{{ __('Adresse') }}</div>
+              <div class="card-header fs-5 fw-bolder">{{ __('Adresse') }}</div>
 
               <div class="card-body">
                   <form method="POST" action="{{ route('adresse.store') }}">
@@ -114,7 +114,7 @@ GameWorld - Compte Client
 
                       <div class="row mb-0">
                           <div class="col-md-6 offset-md-4">
-                              <button type="submit" class="btn btn-primary">
+                              <button type="submit" class="btn btn-primary text-light">
                                   {{ __('Ajouter une adresse') }}
                               </button>
                           </div>
@@ -131,7 +131,7 @@ GameWorld - Compte Client
   <div class="row justify-content-center">
       <div class="col-md-8">
           <div class="card">
-              <div class="card-header">{{ __('Modifier Adresse') }}</div>
+              <div class="card-header fs-5 fw-bolder">{{ __('Modifier Adresse') }}</div>
 
               <div class="card-body">
                   <form method="POST" action="{{ route('adresse.update' , $adresse) }}">
@@ -182,7 +182,7 @@ GameWorld - Compte Client
                       <div class="row mb-0 offset-md-4">
                           <div class="d-flex">
                               <div class="col-md-4">
-                                  <button type="submit" class="btn btn-primary">
+                                  <button type="submit" class="btn btn-primary text-light">
                                       {{ __('modifier adresse') }}
                                   </button>
                               </div>
@@ -260,7 +260,7 @@ GameWorld - Compte Client
 
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary text-light">
                                     {{ __('Modiffier Password') }}
                                 </button>
                             </div>
