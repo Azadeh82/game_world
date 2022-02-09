@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Article;
+use App\Models\Promotion;
 
 class ArticleController extends Controller
 {
@@ -82,5 +83,20 @@ class ArticleController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function populaires(){
+
+        $articles = Article::orderByDesc('note')
+        ->with(['promotions'=>function($query){
+            $date= date("Y-m-d");
+            $query
+            ->whereDate('date_debut', '<=' , $date) //si article est dans promotion actuel
+            ->whereDate('date_fin' , '>=' , $date)
+            ->get();
+        }])
+        ->get();
+
+        return view('article.populaires' , compact('articles'));
     }
 }

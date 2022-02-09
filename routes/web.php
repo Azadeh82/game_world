@@ -14,9 +14,7 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::resource('/adresse', \App\Http\Controllers\AdresseController::class);
 Route::resource('/article', \App\Http\Controllers\ArticleController::class);
@@ -31,7 +29,9 @@ Route::post('/resetpassword', [\App\Http\Controllers\UserController::class, 'res
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('populaires' , [App\Http\Controllers\ArticleController::class, 'populaires'])->name('populaires');
 
 // Route pour le panier (pour pouvoir supprimer, modifier, ajouter ...)
 

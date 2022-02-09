@@ -42,6 +42,16 @@ class PromotionArticlesSeeder extends Seeder
 
         DB::table('promotion_articles')->insert([
             'promotion_id' => 2,
+            'article_id' => 1,
+        ]);
+
+        DB::table('promotion_articles')->insert([
+            'promotion_id' => 2,
+            'article_id' => 3,
+        ]);
+
+        DB::table('promotion_articles')->insert([
+            'promotion_id' => 2,
             'article_id' => 4,
         ]);
 
