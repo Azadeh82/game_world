@@ -30,4 +30,6 @@ class Article extends Model
         return $this->belongsToMany(User::class , 'favoris');
     }
 
+    
+
 }

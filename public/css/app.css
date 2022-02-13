@@ -4,6 +4,10 @@
 }
 
 
+#logo{
+  width: 200px;
+}
+
 footer{
   background: linear-gradient(70deg, #21c0a5, #d0e9da);
   height: 200px;

@@ -65,6 +65,14 @@ class User extends Authenticatable
         return $this->belongsTo(User::class);
     }
 
+    // permet de vérifier si un article est dans les favoris de l'utilisateur connecté
+    // dans la vue, on utilise la syntaxe suivante : @if (Auth::user()->isInFavorites($article))
+
+    public function isInFavorites(Article $article)
+    {
+        return $article->users()->where('user_id', $this->id)->exists();
+    }
+
 }
 
 

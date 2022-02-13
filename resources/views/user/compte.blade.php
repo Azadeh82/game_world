@@ -6,11 +6,89 @@ GameWorld - Compte Client
 
 @section('content')
 
+
+
+<div class="container text-center">
+    <div class="table-responsive shadow mb-3">
+        <h1 class=" fs-2 fw-bolder text-uppercase my-md-2 text-center">MES Informations</h1>
+		<table class="table table-bordered table-hover bg-white mb-0 "> 
+			<thead class="thead-dark">
+				<tr>
+					<th class="align-middle fs-4 fst-italic" >Nom</th>
+
+					<th class="align-middle fs-4 fst-italic" >Prénom</th>
+
+					<th class="align-middle fs-4 fst-italic" >Email</th>
+
+				</tr>
+			</thead>
+			<tbody>
+
+				<tr>
+					
+                    <td class="align-middle fs-3" >{{ $user->nom }}</td>
+
+                    <td class="align-middle fs-3" >{{ $user->prenom }}</td>
+
+                    <td class="align-middle fs-3" >{{ $user->email }}</td>
+
+				</tr>
+
+			</tbody>
+
+		</table>
+	</div>
+
+</div>
+
+@if($user->adresses))
+<div class="container text-center">
+    <div class="table-responsive shadow mb-3">
+        <h1 class=" fs-2 fw-bolder text-uppercase my-md-2 text-center">MES Adresses</h1>
+        
+        @foreach ($user->adresses as $adresse)
+
+		<table class="table table-bordered table-hover bg-white mb-0 "> 
+			<thead class="thead-dark">
+
+				<tr>
+					
+					<th class="align-middle fs-4 fst-italic" >Adresse</th>
+
+                    <th class="align-middle fs-4 fst-italic" >Code Postal</th>
+
+                    <th class="align-middle fs-4 fst-italic" >Ville</th>
+
+				</tr>
+			</thead>
+            
+			<tbody>
+
+				<tr>
+					
+					<td class="align-middle fs-3" >{{ $adresse->adresse }}</td>
+
+					<td class="align-middle fs-3" >{{ $adresse->code_postal }}</td>
+
+                    <td class="align-middle fs-3" >{{ $adresse->ville }}</td>
+
+				</tr>
+
+			</tbody>
+
+		</table>
+        
+	</div>
+    @endforeach
+</div>
+@endif
+
+
 <div class="container">
   <div class="row justify-content-center">
       <div class="col-md-8">
           <div class="card">
-              <div class="card-header fs-5 fw-bolder">{{ __('Mes Information') }}</div>
+              <div class="card-header fs-5 fw-bolder">{{ __('Modifier mes information') }}</div>
 
               <div class="card-body">
                   <form method="POST" action="{{ route('user.update' , $user) }}">
@@ -272,11 +350,43 @@ GameWorld - Compte Client
   </div>
 </div>
 
+@if(isset($user->commandes))
+<div class="container text-center">
+    <div class="table-responsive shadow mb-3">
+        <h1 class=" fs-2 fw-bolder text-uppercase my-md-2 text-center">MES COMMANDES</h1>
+		<table class="table table-bordered table-hover bg-white mb-0 "> 
+			<thead class="thead-dark">
+				<tr>
+					<th class="align-middle fs-4 fst-italic" >numero</th>
 
+					<th class="align-middle fs-4 fst-italic" >Prix</th>
 
+					<th class="align-middle fs-4 fst-italic" >Date</th>
 
+					<th class="align-middle fs-4 fst-italic" >Détails</th>
 
+				</tr>
+			</thead>
+			<tbody>
+				@foreach($user->commandes as $commande)
+				<tr>
+					
+                    <td class="align-middle fs-3" >{{ $commande->numero }}</td>
 
+                    <td class="align-middle fs-3" >{{ $commande->prix }}</td>
 
+					<td class="align-middle fs-3" >{{ $commande->created_at }}</td>
+
+					<td class="align-middle fs-3" ><a href="{{ route('commande.show', $commande) }}" class="button-25 fs-5">Details</a></td>
+					
+				</tr>
+                @endforeach
+			</tbody>
+
+		</table>
+	</div>
+
+</div>
+@endif
 
 @endsection

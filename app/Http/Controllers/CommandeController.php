@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Commande;
 use Illuminate\Http\Request;
 
 class CommandeController extends Controller
@@ -40,12 +41,13 @@ class CommandeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Commande $commande)
     {
-        //
+        $commande->load('articles');
+        return view('commande.show' , compact('commande'));
     }
 
     /**

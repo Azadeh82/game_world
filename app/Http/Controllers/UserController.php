@@ -49,8 +49,9 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        $user->load('adresses');
+        $user->load('adresses' , 'commandes');
         return view('user.compte' , compact('user'));
+
     }
 
     /**

@@ -25,7 +25,9 @@ GameWorld - Les Populaires
 
                 @if(isset($article->promotions[0]))
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item fs-3 text-danger fw-bolder">-{{$article->promotions[0]->reduction. '%' }} (  {{ $article->promotions[0]->nom}} )</li>
+                    <li class="list-group-item fs-4 text-danger fw-bolder">-{{$article->promotions[0]->reduction. '%' }} 
+                        (du {{ date('d/m', strtotime($article->promotions[0]->date_debut)) }} au
+                        {{ date('d/m/y', strtotime($article->promotions[0]->date_fin)) }})</li>
                     <li class="list-group-item text-decoration-line-through fs-3">{{$article->prix}}€</li>
                     <li class="list-group-item">
                         <span class="display-6 text-danger fw-bolder">
