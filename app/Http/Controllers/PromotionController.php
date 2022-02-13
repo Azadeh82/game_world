@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\Promotion;
+
 class PromotionController extends Controller
+
+
 {
     /**
      * Display a listing of the resource.
@@ -54,9 +58,9 @@ class PromotionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Promotion $promotion)
     {
-        //
+        return view('admin/article', compact('promotion'));
     }
 
     /**
@@ -66,9 +70,21 @@ class PromotionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Promotion $promotion)
     {
-        //
+        $request->validate([
+            'nom' => 'required|max:50',
+            'reduction' => 'required|max:99'|'numeric',
+            'date_debut' => 'required|max:10',
+            'date_fin' => 'required|max:10',
+         
+        ]);
+
+        $promotion->update($request->except('_token',));  // method ultra rapide pr rapport a elle juste en bas !
+        
+        $promotion->save();
+        return redirect()->back()->with('message', "La promotion a bien était modifié");
+
     }
 
     /**
@@ -77,8 +93,9 @@ class PromotionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Promotion $promotion)
     {
-        //
+        $promotion->delete();
+        return redirect()->route('index')->with('message', "La promotion a bien était supprimé");
     }
 }

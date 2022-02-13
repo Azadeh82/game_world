@@ -12,4 +12,7 @@ class Gamme extends Model
     public function articles(){
         return $this->hasMany(Article::class);
     }
+
+    protected $fillable = ['nom', 'id'];
+
 }

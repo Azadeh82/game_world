@@ -6,6 +6,15 @@ use Illuminate\Http\Request;
 
 use App\Models\Article;
 
+use Auth;
+
+use App\Models\Adresse;
+
+use Illuminate\Support\Facades\Gate;
+
+
+
+
 class PanierController extends Controller
 {
     # Affichage du panier
@@ -30,9 +39,23 @@ class PanierController extends Controller
 			'nom' => $article->nom,
 			'prix' => $article->prix,
 			'image' => $article->image,
-			'quantite' => $request->quantite
+			'quantite' => $request->quantite,
+			'id' => $article->id
 		];
+		if(isset($article->promotions[0])){
+
+			$article_details['reduction'] = $article->promotions[0]->reduction;
+			$newPrice = $article->prix - $article->prix * ($article->promotions[0]->reduction / 100);
+			$article_details['prix_reduit'] = $newPrice;
 		
+	
+		}else{
+
+			$article_details['reduction'] = 0;
+
+		}
+		
+
 		$panier[$article->id] = $article_details; // On ajoute ou on met à jour le produit au panier
 		session()->put("panier", $panier); // On enregistre le panier
     	// Redirection vers le panier avec un message
@@ -64,5 +87,56 @@ class PanierController extends Controller
     	return back()->withMessage("Panier vidé");
 
     }
+
+	public function validation () { 
+
+		// Gate = un portaile soi on passe soi on passe pas !!!!!!!!!!!
+		if (!Gate::allows('acceder_a_la_validation')) {   // autre syntaxe : if(Gate::denies('access_order_validation'))
+            abort(403);
+        }
+		// On récupére les information de l'utilisateur
+		$user = Auth::user(); 
+		$user->load('adresses');
+
+		// Redirection vers la page validation avec les informations user (compact)
+		return view("validation" , compact('user'));
+
+		
+    }
+
+	public function choixadresse(Request $request) { 
+	
+		$choix = $request['choixadresse']; 
+		$adresse = Adresse::find($choix); // je recupére id de l'adresse grace au name de choixadresse
+        session()->put("adresse", $adresse);  // enregistre dans la session la clez et la valeur de adresse
+		// session(['adresse' => $adresse]); autre possibilité
+		return redirect()->route('validation')->with('message', "L'adresse de livraison a bien était modifier");
+
+    }
+
+	public function choixlivraison (Request $request) { 
+		$user = Auth::user(); 
+		$user->load('adresses');
+
+		$livraison = $request['livraison']; 
+		$total = $request['total'];
+		
+		switch ($livraison) {
+			case "classic":
+				 $total += 5;
+				break;
+			case "express":
+				$total += 9.90;
+				break;
+			case "relais":
+				$total += 4;
+				break;
+		}
+	
+		// return view("validation" , compact('total', 'user', 'livraison'));
+		return view('validation', ['user' => $user, 'nouveautotal' => $total, 'livraison' => $livraison]);
+    }
+
+
 
 }

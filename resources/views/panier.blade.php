@@ -2,6 +2,8 @@
 @section("content")
 <div class="container">
 
+
+
 	@if (session()->has("panier"))
 	<div class="cadre mb-5 text-center">
 		<h1 class="cadre ">Mon panier</h1>
@@ -26,8 +28,18 @@
 				<!-- On parcourt les produits du panier en session : session('panier') -->
 				@foreach (session("panier") as $key => $article)
 
+
 				<!-- On incrémente le total général par le total de chaque produit du panier -->
+
+				@if ($article['reduction'] > 0)
+
+				@php $total += $article['prix_reduit'] * $article['quantite'] @endphp
+
+				@else
+
 				@php $total += $article['prix'] * $article['quantite'] @endphp
+
+				@endif
 				<tr>
 					<td>{{ $loop->iteration }}</td>
 
@@ -40,7 +52,34 @@
 
 
 
-					<td>{{ $article['prix'] }} €</td>
+					<td class="text-center d-flex justify-content-center flex-column align-items-center">
+
+						@if($article['reduction'] !== 0)
+
+						<div class="row">
+							<strike>
+								<?php
+								echo number_format($article['prix'], 2, ',', ' ') . "€";
+
+								?>
+							</strike>
+						</div>
+
+						<div class="row">
+							<?php
+							echo number_format($article['prix_reduit'], 2, ',', ' ') . "€";
+							?>
+						</div>
+
+						@else
+						<?php
+						echo number_format($article['prix'] * $article['quantite'], 2, ',', ' ') . "€";
+
+						?>
+						@endif
+
+
+					</td>
 
 					<td style="width: 18%;">
 						<!-- Le formulaire de mise à jour de la quantité -->
@@ -55,9 +94,24 @@
 						</form>
 					</td>
 
-					<td>
+					<td class="text-center d-flex justify-content-center align-items-center">
 						<!-- Le total du produit = prix * quantité -->
-						{{ $article['prix'] * $article['quantite'] }} €
+						@if($article['reduction'] !== 0)
+
+
+						<?php
+						echo number_format($article['prix_reduit'] * $article['quantite'], 2, ',', ' ') . "€";
+						?>
+
+
+						@else
+
+						<?php
+						echo number_format($article['prix'] * $article['quantite'], 2, ',', ' ') . "€";
+						?>
+
+						@endif
+
 					</td>
 					<td>
 						<!-- Le Lien pour retirer un produit du panier -->
@@ -72,7 +126,12 @@
 					<td colspan="4">Total général</td>
 					<td colspan="2">
 						<!-- On affiche total général -->
-						<strong>{{ $total }} €</strong>
+						<?php
+
+						echo number_format($total, 2, ',', ' ') . "€";
+
+						?>
+
 					</td>
 				</tr>
 			</tbody>
@@ -84,7 +143,14 @@
 	<div class="row">
 		<div class="col-12 d-flex justify-content-center">
 			<a class="button-24 me-5" href="{{ route('panier.empty') }}" title="Retirer tous les produits du panier" style="text-decoration:none; ">Vider le panier</a>
-			<a class="button-27" href="{{ route('panier.show') }}" title="acceder a la page validation" style="text-decoration:none; ">Valider</a>
+
+			@if (Auth::check())
+                    <!-- Lien pour valider le panier -->
+                    <a class="button-27" href="{{ route('validation') }}" title="validation">Valider la
+                        commande</a>
+                @else
+                    <p class="p-2">Vous devez être connecté pour valider la commande.</p>
+                @endif
 		</div>
 	</div>
 	@else

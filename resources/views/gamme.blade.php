@@ -23,7 +23,24 @@ gammes
                     <img src="images/{{ $article->image }}" class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">{{$article->nom}}</h5>
+                        
+                        @if(isset($article->promotions[0]))
+                        <strike>
+                            <h5 class="prix card-title">{{$article->prix}}€</h5>
+                        </strike>
+                        <h3 class="prix card-title">
+                            
+                        @php
+                            $newPrice = $article->prix - $article->prix * ($article->promotions[0]->reduction / 100);
+                            echo number_format($newPrice, 2) . "€";
+                            @endphp</h3>
+
+                            <p class=" text-danger font-weight-bold">{{ $article->promotions[0]->nom  }} :
+                                       - {{ $article->promotions[0]->reduction}} %</p>
+                        @else
                         <h3 class="prix card-title">{{$article->prix}}€</h3>
+                        @endif
+
                         <p class="card-text courte">{{$article->description_courte}}</p>
                         <!-- on transmet lensemble des information de article (objet article) via la route-->
                         <a href="{{ route('article.show', $article) }}" class="button-62">Details produits</a>

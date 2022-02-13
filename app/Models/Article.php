@@ -30,4 +30,6 @@ class Article extends Model
         return $this->belongsToMany(User::class , 'favoris');
     }
 
+    protected $fillable = ['nom', 'description_courte', 'description_longue', 'image', 'prix', 'stock', 'note', 'gamme_id'];
+
 }

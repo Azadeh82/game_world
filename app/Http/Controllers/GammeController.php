@@ -15,8 +15,14 @@ class GammeController extends Controller
      */
     public function index()
     {
-        $gammes =  Gamme::all();
-        $gammes->load('articles');
+
+        $gammes =  Gamme::with(['articles.promotions' => function ($query) {
+            $query->whereDate('date_debut', '<=', date('Y-m-d'))
+                ->whereDate('date_fin', '>=', date('Y-m-d'))->get();
+        }])
+        
+        ->get();
+
         return view('gamme', compact('gammes'));
     }
 
@@ -60,9 +66,9 @@ class GammeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Gamme $gamme)
     {
-        //
+        return view('admin/gamme', compact('gamme'));
     }
 
     /**
@@ -72,9 +78,23 @@ class GammeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Gamme $gamme)
     {
-        //
+        $request->validate([
+            'nom' => 'required|max:30',
+            'id' => 'required|numeric',  
+        ]);
+
+        $gamme->update($request->except('_token',));  // methode ultra rapide pr rapport a elle juste en bas !
+        // $article->nom = $request['nom'];
+        // $article->image = $request['image'];
+        // $article->description_courte = $request['description_courte'];
+        // $article->description_longue = $request['description_longue'];
+        // $article->prix = $request['prix'];
+        // $article->stock = $request['stock'];
+        
+        $gamme->save();
+        return redirect()->back()->with('message', "La gamme a bien était modifié");
     }
 
     /**
@@ -83,8 +103,9 @@ class GammeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Gamme $gamme)
     {
-        //
+        $gamme->delete();
+        return redirect()->route('index')->with('message', 'La gamme a bien était supprimé');
     }
 }

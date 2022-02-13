@@ -14,7 +14,13 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles =  Article::all();
+        $articles =  Article::with(['promotions' => function ($query) {
+            $query->whereDate('date_debut', '<=', date('Y-m-d'))
+                ->whereDate('date_fin', '>=', date('Y-m-d'))->get();
+        }])
+ 
+        
+        ->get();
         return view('article', compact('articles'));
     }
 
@@ -56,9 +62,9 @@ class ArticleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Article $article)
     {
-        //
+        return view('admin/article', compact('article'));
     }
 
     /**
@@ -68,9 +74,29 @@ class ArticleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Article $article)
     {
-        //
+        $request->validate([
+            'nom' => 'required|max:30',
+            'image' => 'required|max:30',
+            'description_courte' => 'required|max:60',
+            'description_longue' => 'required|max:1000',
+            'prix' => 'required|numeric',
+            'stock' => 'required|max:100|numeric',
+         
+        ]);
+
+        $article->update($request->except('_token',));  // method ultra rapide pr rapport a elle juste en bas !
+        // $article->nom = $request['nom'];
+        // $article->image = $request['image'];
+        // $article->description_courte = $request['description_courte'];
+        // $article->description_longue = $request['description_longue'];
+        // $article->prix = $request['prix'];
+        // $article->stock = $request['stock'];
+        
+        $article->save();
+        return redirect()->back()->with('message', "L'article a bien était modifié");
+
     }
 
     /**
@@ -79,8 +105,9 @@ class ArticleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Article $article)
     {
-        //
+        $article->delete();
+        return redirect()->route('index')->with('message', "L'article a bien était supprimé");
     }
 }

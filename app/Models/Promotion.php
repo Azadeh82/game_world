@@ -11,4 +11,7 @@ class Promotion extends Model
     public function articles(){
         return $this->belongsToMany(Article::class , 'promotion_articles');
     }
+
+    protected $fillable = ['nom', 'reduction', 'date_debut', 'date_fin'];
+
 }

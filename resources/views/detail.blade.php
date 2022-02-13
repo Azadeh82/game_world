@@ -25,7 +25,7 @@ gammes
                         <form action="{{ route('panier.add', $article) }}" method="post">
                             @csrf
                             <input class="form-control mt-3 w-50 mx-auto" type="number" name="quantite" value='1'>
-                            <input type="submit" value="Ajouter au panier" class="button-63 mt-3">
+                            <input type="submit" value="Ajouter au panier" class="button-63 mt-3 mb-3">
                         </form>
 
                     </div>

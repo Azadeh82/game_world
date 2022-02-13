@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Providers;
+use Auth;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
@@ -25,6 +26,10 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('acceder_a_la_validation', function () {
+            return Auth::user();
+        });
     }
+
+    
 }

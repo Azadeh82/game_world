@@ -19,4 +19,11 @@ class Commande extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
+
+    protected $fillable = [
+        'prix',
+        'numero',
+        'user_id',
+        'adresse_id',
+    ];
 }
