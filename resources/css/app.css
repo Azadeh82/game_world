@@ -7,9 +7,21 @@
   width: 200px;
 }
 
+body{
+  position: relative;
+}
+
+nav{
+  background: linear-gradient(70deg, #21c0a5, #d0e9da);
+  height: 100px;
+}
+
 footer{
   background: linear-gradient(70deg, #21c0a5, #d0e9da);
-  height: 200px;
+  height: 150px;
+  width:100%;
+  margin-top: 20vh;
+
  }
 
 .cadrefooter{

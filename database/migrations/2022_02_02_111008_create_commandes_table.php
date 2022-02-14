@@ -18,9 +18,10 @@ class CreateCommandesTable extends Migration
             $table->char('numero', 7);
             $table->float('prix');
             $table->timestamps();
-
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('adresse_id')->constrained();
+
+            $table->unsignedBigInteger('adresse_id')->nullable();
+            $table->foreign('adresse_id')->references('id')->on('adresses')->onDelete('set null');
         });
     }
 

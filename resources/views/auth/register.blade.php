@@ -9,7 +9,7 @@ GameWorld - Inscription
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Inscription') }}</div>
+                <div class="card-header  fs-5 fw-bolder">{{ __('Inscription') }}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
@@ -88,7 +88,7 @@ GameWorld - Inscription
 
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="button-63">
                                     {{ __('Inscription') }}
                                 </button>
                             </div>

@@ -43,18 +43,38 @@ GameWorld - Les Populaires
                 @endif
         
                 <div class="card-body d-flex flex-column mx-md-5">
-                    <a href="{{ route('article.show', $article) }}" class="button-62">Details produits</a>
+                    <a href="{{ route('article.show', $article) }}" class="button-63">Details produits</a>
+
+                    @if(auth()->user() !== null)
+                    @if(Auth::user()->isInfavorites($article))
+                        {{-- existe dans favoris --}}
+                        <form action="{{ route('favori.destroy', $article) }}" method="post">
+                            @csrf
+                            @method('DELETE')
+                            <input type="hidden" value="{{ $article->id }}" name="articleId">
+                            <input type="submit" value="Retirer au favoris" class="button-24 mt-3">
+                        </form>
+
+                    @else
+                        <form action="{{ route('favori.store', $article) }}" method="post">
+                            @csrf
+
+                            <input type="hidden" value="{{ $article->id }}" name="articleId">
+                            <input type="submit" value="Ajouter au favoris" class="button-27 mt-3">                         
+                        </form>
+                    @endif
+                    @endif
                     <form action="{{ route('panier.add', $article) }}" method="post">
                         @csrf
                         <input class="form-control mt-3 w-50 mx-auto" type="number" name="quantite"  min="1" max="10" value='1'>
-                        <input type="submit" value="Ajouter au panier" class="button-63 mt-3">
+                        <input type="submit" value="Ajouter au panier" class="button-62 mt-3">
                     </form>
                 </div>
             </div>
         </div>
         @endforeach
         <div>
-            <a href="{{ route('article.index') }}" class="button-25 my-md-5 fs-3">VOIR TOUT LE CATALOGUE</a>
+            <a href="{{ route('article.index') }}" class="button-63 my-md-5 fs-3">VOIR TOUT LE CATALOGUE</a>
         </div>
     </div>
 </div>

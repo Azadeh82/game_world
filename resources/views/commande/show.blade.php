@@ -12,7 +12,87 @@ GameWorld - Details Commande
   </div>
 </div>
 
-  @if(!isset($commande))
+  @if(isset($commande))
+
+<div class="row my-md-5r">
+    <h1 class=" fs-2 fw-bolder text-uppercase my-md-2 text-center"> Numéro : {{$commande->numero}}</h1>
+    <h1 class=" fs-2 fw-bolder text-uppercase my-md-2 text-center"> montant : {{$commande->prix}}</h1>
+    <h1 class=" fs-2 fw-bolder text-uppercase my-md-2 text-center mb-md-5"> Date : {{$commande->created_at}}</h1>
+</div> 
+
+<div class="container text-center">
+  <div class="table-responsive shadow mb-3">
+      
+      <table class="table table-bordered table-hover bg-white mb-0 "> 
+          <thead class="thead-dark">
+              <tr>
+                  <th class=" fs-4 fst-italic">nom</th>
+
+                  <th class=" fs-4 fst-italic" >Prix</th>
+
+                  <th class=" fs-4 fst-italic" >description_courte</th>
+
+                  <th class=" fs-4 fst-italic" >Quantité</th>
+
+                  <th class=" fs-4 fst-italic" >Réduction</th>
+
+                  <th class=" fs-4 fst-italic" >prix line</th>
+
+              </tr>
+          </thead>
+          <tbody>
+              @php $total=0;
+              @endphp
+              @foreach($commande->articles as $article)
+              <tr>
+                  <td class="fs-3">{{ $article->nom }} </td>
+
+                  <td class="fs-3">{{ $article->prix }}</td>
+
+                  <td class="fs-3">{{ $article->description_courte }}</td>
+
+                  <td class="fs-3">{{ $article->pivot->quantite }}</td>
+
+                  <td class="fs-3 fw-bold text-danger">- {{ $article->pivot->reduction }} %</td>
+
+                  @if(isset($article->pivot->reduction))
+
+                  <td class="fs-3 fw-bold text-danger">@php
+                      $total += ($article->prix * $article->pivot->quantite) - ($article->prix * $article->pivot->quantite * ($article->pivot->reduction / 100)) ;
+                      echo number_format($total, 2);
+                      @endphp
+                      €</td>
+
+                  @else
+
+                  <td class="fs-3 fw-bold text-danger">@php
+                      $total += ($article->prix * $article->pivot->quantite);
+                      echo number_format($total, 2);
+                      @endphp
+                      €</td>
+
+                  @endif
+
+              </tr>
+
+              @endforeach
+
+          </tbody>
+
+      </table>
+
+  </div>
+
+  <h2 class=" fs-4 fw-bolder mt-md-5 mb-md-3"> Frais : 
+      @php
+          $frais=0;
+          $frais += $commande->prix - $total;
+          echo number_format($frais,2);
+      @endphp
+      €</h2>
+</div>
+
+@else
 
   <div class="container my-md-5">
       <div class="row justify-content-center">
@@ -32,91 +112,11 @@ GameWorld - Details Commande
       </div>
   </div>
   
-  @else
+ @endif
 
-
-  <div class="row my-md-5r">
-      <h1 class=" fs-2 fw-bolder text-uppercase my-md-2 text-center"> Numéro : {{$commande->numero}}</h1>
-      <h1 class=" fs-2 fw-bolder text-uppercase my-md-2 text-center"> montant : {{$commande->prix}}</h1>
-      <h1 class=" fs-2 fw-bolder text-uppercase my-md-2 text-center mb-md-5"> Date : {{$commande->created_at}}</h1>
-  </div> 
-
-  <div class="container text-center">
-    <div class="table-responsive shadow mb-3">
-        
-		<table class="table table-bordered table-hover bg-white mb-0 "> 
-			<thead class="thead-dark">
-				<tr>
-					<th class=" fs-4 fst-italic">nom</th>
-
-					<th class=" fs-4 fst-italic" >Prix</th>
-
-					<th class=" fs-4 fst-italic" >description_courte</th>
-
-					<th class=" fs-4 fst-italic" >Quantité</th>
-
-                    <th class=" fs-4 fst-italic" >Réduction</th>
-
-                    <th class=" fs-4 fst-italic" >prix line</th>
-
-				</tr>
-			</thead>
-			<tbody>
-                @php $total=0;
-                @endphp
-                @foreach($commande->articles as $article)
-				<tr>
-					<td class="fs-3">{{ $article->nom }} </td>
-
-                    <td class="fs-3">{{ $article->prix }}</td>
-
-                    <td class="fs-3">{{ $article->description_courte }}</td>
-
-                    <td class="fs-3">{{ $article->pivot->quantite }}</td>
-
-                    <td class="fs-3 fw-bold text-danger">- {{ $article->pivot->reduction }} %</td>
-
-                    @if(isset($article->pivot->reduction))
-
-					<td class="fs-3 fw-bold text-danger">@php
-                        $total += ($article->prix * $article->pivot->quantite) - ($article->prix * $article->pivot->quantite * ($article->pivot->reduction / 100)) ;
-                        echo number_format($total, 2);
-                        @endphp
-                        €</td>
-
-                    @else
-
-                    <td class="fs-3 fw-bold text-danger">@php
-                        $total += ($article->prix * $article->pivot->quantite);
-                        echo number_format($total, 2);
-                        @endphp
-                        €</td>
-
-                    @endif
-
-				</tr>
-
-                @endforeach
-
-			</tbody>
-
-		</table>
-
-	</div>
-
-    <h2 class=" fs-4 fw-bolder mt-md-5 mb-md-3"> Frais : 
-        @php
-            $frais=0;
-            $frais += $commande->prix - $total;
-            echo number_format($frais,2);
-        @endphp
-        €</h2>
-
-    @endif
-  </div>
 
   <div class="text-center">
-    <a href="{{ route('user.show' , $user = auth()->user()->id) }}" class="button-25 my-md-5 fs-5">Rotour à mon compte</a>
+    <a href="{{ route('user.show' , $user = auth()->user()->id) }}" class="button-63 my-md-5 fs-5">Rotour à mon compte</a>
   </div>
  
 @endsection

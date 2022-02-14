@@ -6,20 +6,36 @@ GameWorld - Favoris
 
 @section('content')
 
- 
 <div class="container text-center my-md-5">
-    <div class="row border border-3 py-md-5">
+    <div class="row  py-md-5">
         <div class="cadre mb-5">
             <h1 class="cadre ">MES FAVORIS</h1>
         </div>
         @foreach($user->favoris as $article)
-        <div class="col d-flex justify-content-center">
+        <div class="col d-flex justify-content-center my-md-3">
             <div class="card mx-md-3" style="width: 22rem;">
                 <img src="/images/{{$article->image}}" class="card-img-top" alt="img_article">
                 <div class="card-body">
                     <h5 class="card-title fw-bolder fs-2 text-primary">{{$article->nom}}</h5>
                     <p class="card-text fw-bolder fs-4">{{$article->description_courte}}</p>
-                    <h5 class="card-text fw-bolder fs-3">{{$article->prix}}</h5>
+                    @if(isset($article->promotions[0]))
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item fs-5 text-danger fw-bolder">-{{$article->promotions[0]->reduction. '%' }} 
+                            (du {{ date('d/m', strtotime($article->promotions[0]->date_debut)) }} au
+                            {{ date('d/m/y', strtotime($article->promotions[0]->date_fin)) }})</li>
+                        <li class="list-group-item text-decoration-line-through fs-3">{{$article->prix}}€</li>
+                        <li class="list-group-item">
+                            <span class="display-6 text-danger fw-bolder">
+                            @php
+                                $newPrice = $article->prix - $article->prix * ($article->promotions[0]->reduction / 100);
+                                echo number_format($newPrice, 2);
+                            @endphp
+                            €</span>
+                        </li>
+                        @else 
+                        <li class="list-group-item fs-3">{{$article->prix}}€</li>
+                    </ul>
+                    @endif
                 </div>
                 
                 <div class="card-body d-flex flex-column mx-md-5">
@@ -56,5 +72,7 @@ GameWorld - Favoris
         </div> 
         @endforeach
 </div>
+
+
 
 @endsection

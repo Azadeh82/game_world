@@ -17,11 +17,20 @@ class FavoriController extends Controller
     public function index()
     {
     
-        $user = User::find(auth()->user()->id);
+        $user = User::find(auth()->user()->id); //trouver user avec son id
 
-        $user->load('favoris');
+        $user->load('favoris'); //charger ses favoris 
 
-        return view('favori.index' , compact('user'));
+        if(count($user->favoris)>0){
+
+             return view('favori.index' , compact('user'));
+
+        }else{
+
+            return redirect()->back()->withErrors(['erreur' => 'vous n\'avez pas d\'article dans favoris']);
+ 
+        }
+        
     }
 
     /**
@@ -45,7 +54,7 @@ class FavoriController extends Controller
 
         $user = User::find(auth()->user()->id);
         
-        $user->favoris()->attach($request['articleId']);
+        $user->favoris()->attach($request['articleId']); 
 
         return redirect()->back()->with('message', 'votre article a bien ajouté aux favoris');
         
@@ -97,9 +106,15 @@ class FavoriController extends Controller
 
         $user = User::find(auth()->user()->id);
         
-        $user->favoris()->detach($articleId);
+        $user->favoris()->detach($articleId); 
 
-        return redirect()->back()->with('message', 'Article a supprimé aux favoris');
+        if (count($user->favoris) > 0){
 
+                 return redirect()->back()->with('message', 'Article supprimé des favoris');
+
+        } else {
+
+            return redirect()->route('home')->with('message', 'Article supprimé des favoris');
+        }
     }
 }

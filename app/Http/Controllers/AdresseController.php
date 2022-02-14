@@ -7,30 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 
-
 class AdresseController extends Controller
 {
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-       //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -42,7 +20,7 @@ class AdresseController extends Controller
         $validated = $request->validate([
             'adresse' => ['required', 'string', 'min:3' , 'max:255'],
             'code_postal' => ['required', 'string', 'min:5' , 'max:5'],
-            'ville' => ['required', 'string', 'min:5' , 'max:20']
+            'ville' => ['required', 'string', 'min:3' , 'max:20']
         ]);
         
         $user = Auth::user();
@@ -50,31 +28,9 @@ class AdresseController extends Controller
         $adresse->user_id = $user->id;
         $adresse->adresse = $validated['adresse'];
         $adresse->code_postal = $validated['code_postal'];
-        $adresse->ville = $validated['code_postal'];
+        $adresse->ville = $validated['ville'];
         $adresse->save();
         return redirect()->route('user.show' , $user)->with('message', 'votre adresse a bien été ajouté');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show()
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**
@@ -89,7 +45,7 @@ class AdresseController extends Controller
         $validated = $request->validate([
             'adresse' => ['required', 'string', 'min:3' , 'max:255'],
             'code_postal' => ['required', 'string', 'min:5' , 'max:5'],
-            'ville' => ['required', 'string', 'min:5' , 'max:20']
+            'ville' => ['required', 'string', 'min:3' , 'max:20']
         ]);
         
         $user = Auth::user();
@@ -97,7 +53,7 @@ class AdresseController extends Controller
         $adresse->user_id = $user->id;
         $adresse->adresse = $validated['adresse'];
         $adresse->code_postal = $validated['code_postal'];
-        $adresse->ville = $validated['code_postal'];
+        $adresse->ville = $validated['ville'];
         $adresse->user_id = $user->id;
         $adresse->save();
         return redirect()->route('user.show' , $user)->with('message', 'votre adresse a bien été modifié');
@@ -109,7 +65,7 @@ class AdresseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Adresse $adresse)
+    public function destroy(Adresse $adresse) 
     {
         $user = Auth::user();
         $adresse->delete();
