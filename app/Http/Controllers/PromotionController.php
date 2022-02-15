@@ -7,6 +7,12 @@ use App\Models\Promotion;
 
 use App\Models\Promotion;
 
+use Validator;
+
+use App\Models\Article;
+
+
+
 class PromotionController extends Controller
 
 
@@ -29,7 +35,7 @@ class PromotionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create() // on a la view create ici pour faire apres la creation dans store oui, oui pas besoin de réflechir !
     {
         //
     }
@@ -42,7 +48,34 @@ class PromotionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $request->validate([
+
+            'nom' => 'required|max:50',
+            'reduction' => 'required|max:99|numeric',
+            'date_debut' => 'required|max:10|date',
+            'date_fin' => 'required|max:10|date',
+        ]);
+
+        $promotion = new Promotion;
+        $promotion->nom = $request['nom'];
+        $promotion->reduction = $request['reduction'];
+        $promotion->date_debut = $request['date_debut'];
+        $promotion->date_fin = $request['date_fin'];
+        $promotion->save();
+
+        // $campagne = Campagne::create($request->all()); ligne simplifier (et donc faire le fillable)
+
+        $articles = Article::all();
+
+        for ($i = 1; $i < count($articles); $i++) {
+
+            if (isset($request['article' . $i])) {
+                $promotion->articles()->attach([$articles[$i]->id]);
+            }
+        }
+
+        return redirect()->route('index')->with('message', 'La nouvel promotion a bien était créé');
     }
 
     /**
@@ -63,7 +96,9 @@ class PromotionController extends Controller
      */
     public function edit(Promotion $promotion)
     {
-        return view('admin/article', compact('promotion'));
+        $articles = Article::all();
+        $promotion->load('articles');
+        return view('admin/promotion', compact('promotion', 'articles'));
     }
 
     /**
@@ -77,17 +112,39 @@ class PromotionController extends Controller
     {
         $request->validate([
             'nom' => 'required|max:50',
-            'reduction' => 'required|max:99'|'numeric',
+            'reduction' => 'required|max:99|numeric',
             'date_debut' => 'required|max:10',
             'date_fin' => 'required|max:10',
-         
+
         ]);
+        // on sauvegarde les modifications issues du formulaire
+        $promotion->update($request->all());
 
-        $promotion->update($request->except('_token',));  // method ultra rapide pr rapport a elle juste en bas !
-        
-        $promotion->save();
+        // on charge les articles associés à la promotion$promotion
+        $promotion->load('articles');
+
+        // on les retire de la table intermédiaire
+        foreach ($promotion->articles as $article) {
+            $promotion->articles()->detach($article);
+        }
+
+        // on récupère la liste des articles
+        $articles = Article::all();
+
+        // on associe à la promotion$promotion ceux cochés dans le formulaire
+        // for ($i = 1; $i < count($articles); $i++) {
+        //     if (isset($request['article' . $i])) {
+        //         $promotion->articles()->attach([$articles[$i]->id]);
+        //     }
+        // }
+
+        foreach ($articles as $article) {
+            if (isset ($request['article' . $article->id])){
+                $promotion->articles()->attach([$article->id]);
+            }
+        }
+
         return redirect()->back()->with('message', "La promotion a bien était modifié");
-
     }
 
     /**

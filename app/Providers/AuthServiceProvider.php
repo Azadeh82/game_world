@@ -29,6 +29,10 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('acceder_a_la_validation', function () {
             return Auth::user();
         });
+
+        Gate::define('acceder_au_back_office', function ($user) {
+            return $user ->isAdmin(); //condition à satisfaire pour passer le gate
+        });
     }
 
     

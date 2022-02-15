@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Article;
-use App\Models\Promotion;
+use App\Models\Gamme;
 
 class ArticleController extends Controller
 {
@@ -19,9 +19,9 @@ class ArticleController extends Controller
             $query->whereDate('date_debut', '<=', date('Y-m-d'))
                 ->whereDate('date_fin', '>=', date('Y-m-d'))->get();
         }])
- 
-        
-        ->get();
+
+
+            ->get();
         return view('article', compact('articles'));
     }
 
@@ -41,9 +41,47 @@ class ArticleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) // créer l'article
+    public function store(Request $request, Article $article) // créer l'article
     {
-        //
+
+        
+        $request->validate([
+
+            'nom' => 'required|max:30',
+            'image' => 'required|max:30',
+            'description_courte' => 'required|max:60',
+            'description_longue' => 'required|max:1000',
+            'prix' => 'required|numeric',
+            'stock' => 'required|max:100|numeric',
+        ]);
+
+        Article::create([
+            'nom' => $request['nom'],
+            'image' => $request['image'],
+            'description_courte' => $request['description_courte'],
+            'description_longue' => $request['description_longue'],
+            'prix' => $request['prix'],
+            'stock' => $request['stock'],
+            'gamme_id' => $request['gamme_id'],
+            'note' => rand(1, 5)
+
+
+        ]);
+
+        // $article = new Article;
+      
+        // $article->nom = $request['nom'];
+        // $article->image = $request['image'];
+        // $article->description_courte = $request['description_courte'];
+        // $article->description_longue = $request['description_longue'];
+        // $article->prix = $request['prix'];
+        // $article->stock = $request['stock'];
+
+        // $article->gamme_id = $request['gamme_id'];
+     
+        // $article->save();
+
+        return redirect()->route('index')->with('message', 'Le nouvel article a bien était créé');
     }
 
     /**
@@ -65,7 +103,8 @@ class ArticleController extends Controller
      */
     public function edit(Article $article)
     {
-        return view('admin/article', compact('article'));
+        $gammes = Gamme::all();
+        return view('admin/article', compact('article', 'gammes'));
     }
 
     /**
@@ -81,10 +120,11 @@ class ArticleController extends Controller
             'nom' => 'required|max:30',
             'image' => 'required|max:30',
             'description_courte' => 'required|max:60',
-            'description_longue' => 'required|max:1000',
+            'description_longue' => 'required|max:2000',
             'prix' => 'required|numeric',
             'stock' => 'required|max:100|numeric',
-         
+            
+
         ]);
 
         $article->update($request->except('_token',));  // method ultra rapide pr rapport a elle juste en bas !
@@ -94,10 +134,9 @@ class ArticleController extends Controller
         // $article->description_longue = $request['description_longue'];
         // $article->prix = $request['prix'];
         // $article->stock = $request['stock'];
-        
+
         $article->save();
         return redirect()->back()->with('message', "L'article a bien était modifié");
-
     }
 
     /**

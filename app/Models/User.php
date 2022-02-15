@@ -44,24 +44,28 @@ class User extends Authenticatable
     ];
 
 
-    public function adresses(){
+    public function adresses()
+    {
         return $this->hasMany(Adresse::class);
-
     }
 
-    public function avis(){
+    public function avis()
+    {
         return $this->hasMany(Avis::class);
     }
 
-    public function favoris(){
-        return $this->belongsToMany(Article::class , 'favoris');
+    public function favoris()
+    {
+        return $this->belongsToMany(Article::class, 'favoris');
     }
 
-    public function commandes(){
+    public function commandes()
+    {
         return $this->hasMany(Commande::class);
     }
 
-    public function role(){
+    public function role()
+    {
         return $this->belongsTo(User::class);
     }
 
@@ -73,7 +77,8 @@ class User extends Authenticatable
         return $article->users()->where('user_id', $this->id)->exists();
     }
 
+    public function isAdmin()
+    {
+        return auth()->user()->role_id == "2";
+    }
 }
-
-
-
