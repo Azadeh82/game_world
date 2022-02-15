@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Article;
 use App\Models\Gamme;
+use Auth;
 
 class GammeController extends Controller
 {
@@ -42,9 +43,18 @@ class GammeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Gamme $gamme, Request $request)
     {
-        //
+
+        $request->validate([
+
+            'nom' => 'required|max:30'       
+        ]);
+
+        $gamme->nom = $request['nom'];
+        $gamme->save();
+        return redirect()->route('index')->with('message', 'La nouvel gamme a bien était créé');
+
     }
 
     /**
@@ -82,7 +92,7 @@ class GammeController extends Controller
     {
         $request->validate([
             'nom' => 'required|max:30',
-            'id' => 'required|numeric',  
+            
         ]);
 
         $gamme->update($request->except('_token',));  // methode ultra rapide pr rapport a elle juste en bas !

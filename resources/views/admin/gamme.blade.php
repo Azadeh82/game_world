@@ -12,10 +12,6 @@ Admin
                 @csrf
                 @method('PUT')
                 <div class="mb-3">
-                    <label for="id" class="form-label">Id de la gamme : </label>
-                    <input type="number" class="form-control" id="id" name="id" value="{{ $gamme->id }}">
-                </div>
-                <div class="mb-3">
                     <label for="nom" class="form-label">Nom de la gamme : </label>
                     <input type="text" class="form-control" id="nom" name="nom" value="{{ $gamme->nom }}">
                 </div>  

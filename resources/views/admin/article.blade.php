@@ -7,7 +7,7 @@ Admin
 <div class="container">
     <div class="row">
         <div class="col-12 bg-white w-50 p-5 mx-auto">
-            <h3 class="text-center" style="color:#427eff;">Modifier l'article :<br>{{ $article->nom }}</h3>
+            <h3 class="text-center" style="color:#427eff">Modifier l'article :<br>{{ $article->nom }}</h3>
             <form action="{{route('article.update', $article)}}" method="post">
                 @csrf
                 @method('PUT')
@@ -34,8 +34,17 @@ Admin
                 <div class="mb-3">
                     <label for="stock" class="form-label">Le stock : </label>
                     <input type="number" class="form-control" id="stock" name="stock" value="{{ $article->stock }}">
-                </div>   
-                <input type="submit" class="button-25" value="Modifier">
+                </div> 
+                <div class="form-group">    
+                    <label for="stock" class="form-label">Choisissez une gamme</label>
+                    <select name="gamme_id" id="gamme_id" class="form-select">   
+                        
+                        @foreach ($gammes as $gamme)
+                            <option value="{{ $gamme->id }}">{{ $gamme->nom }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <input type="submit" class="button-25 mt-3" value="Modifier">
             </form>
         </div>
     </div>
