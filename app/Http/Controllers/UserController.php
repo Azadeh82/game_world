@@ -47,10 +47,11 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(User $user)  
     {
-        $user->load('adresses');
+        $user->load('adresses' , 'commandes');
         return view('user.compte' , compact('user'));
+
     }
 
     /**
@@ -101,7 +102,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function resetpassword(Request $request)
+    public function resetpassword(Request $request) //verfication de password afin d'etre securité
     {
         $request->validate([
             'password' => 'required',

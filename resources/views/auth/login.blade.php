@@ -9,7 +9,7 @@ GameWorld - Connexion
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Connexion') }}</div>
+                <div class="card-header fs-5 fw-bolder">{{ __('Connexion') }}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
@@ -29,6 +29,13 @@ GameWorld - Connexion
                             </div>
                         </div>
 
+                        <div class="row">
+                            <label for="password" class="col-md-4 col-form-label text-md-end"></label>
+                            <div class="col-md-6">
+                                <small id="password" class="form-text text-muted">Entre 8 et 15 caractères, minimum 1 lettre, 1 chiffre et 1 caractère spécial</small>
+                            </div>
+                        </div>
+                        
                         <div class="row mb-3">
                             <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
 
@@ -57,7 +64,7 @@ GameWorld - Connexion
 
                         <div class="row mb-0">
                             <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="button-63">
                                     {{ __('Connecter') }}
                                 </button>
 
