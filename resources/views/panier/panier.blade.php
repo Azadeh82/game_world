@@ -87,7 +87,7 @@
 							{{ csrf_field() }}
 							<div class="row">
 								<div class="col-12 d-flex">
-									<input type="number" name="quantite" placeholder="Quantité ?" value="{{ $article['quantite'] }}" class="form-control mr-2" style="width: 80px">
+									<input type="number" min="1" max="10" name="quantite" placeholder="Quantité ?" value="{{ $article['quantite'] }}" class="form-control mr-2" style="width: 80px">
 									<input type="submit" class="button-25 ms-3" value="Actualiser" />
 								</div>
 							</div>

@@ -14,7 +14,7 @@ GameWorld - Accueil
     <div class="container text-center my-md-5">
         <div class="row border border-3 py-md-5">
             <h1 class="display-1 text-danger fw-bolder text-uppercase my-md-5">{{$promotion->nom}}</h1>
-            <h2 class="display-4 text-danger fw-bolder">-{{$promotion->reduction. '%' }} sur une selection</h2>
+            <h2 class="display-4 text-danger fw-bolder">-{{$promotion->reduction. '%' }} sur une selection d'articles</h2>
             <h2 class="fs-1 fw-bolder fst-italic my-md-5">du {{ date('d/m', strtotime($promotion->date_debut)) }} au
                 {{ date('d/m/y', strtotime($promotion->date_fin)) }}</h2>
 
@@ -62,7 +62,10 @@ GameWorld - Accueil
                         <form action="{{ route('panier.add', $article) }}" method="post">
                             @csrf
                             <input class="form-control mt-3 w-50 mx-auto" type="number" name="quantite" min="1" max="10" value='1'>
+
+                            @if ($article->stock !== 0)
                             <input type="submit" value="Ajouter au panier" class="button-62 mt-3">
+                        @endif
                         </form>
                     </div>
                 </div>
@@ -132,7 +135,9 @@ GameWorld - Accueil
                         <form action="{{ route('panier.add', $topRatedArticle) }}" method="post">
                             @csrf
                             <input class="form-control mt-3 w-50 mx-auto" type="number" name="quantite"  min="1" max="10" value='1'>
+                            @if ($article->stock !== 0)
                             <input type="submit" value="Ajouter au panier" class="button-62 mt-3">
+                            @endif
                         </form>
                     </div>
                 </div>

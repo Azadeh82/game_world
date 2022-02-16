@@ -80,7 +80,7 @@ class UserController extends Controller
         $user->nom = $validated['nom'];
         $user->prenom = $validated['prenom'];
         $user->save();
-        return redirect()->route('user.show' , $user)->with('message', 'Le compte a bien été modifié');
+        return redirect()->back()->with('message', 'Le compte a bien été modifié');
 
     }
 

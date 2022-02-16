@@ -33,7 +33,7 @@ Admin
                 </div>
                 <div class="mb-3">
                     <label for="stock" class="form-label">Le stock : </label>
-                    <input type="number" class="form-control" id="stock" name="stock" value="{{ $article->stock }}">
+                    <input type="number"  class="form-control" id="stock" name="stock" value="{{ $article->stock }}">
                 </div> 
                 <div class="form-group">    
                     <label for="stock" class="form-label">Choisissez une gamme</label>

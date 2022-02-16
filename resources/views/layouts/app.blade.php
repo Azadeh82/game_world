@@ -54,6 +54,10 @@
                         <li class="nav-item">
                             <a class="nav-link fw-bolder fs-5 text-light" href="{{ route('populaires') }}">{{ __('LES PLUS POPULAIRES') }}</a>
                         </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link fw-bolder fs-5 text-light" href="{{ route('panier.show') }}">{{ __('PANIER') }}</a>
+                        </li>
                         
 
                     </ul>
@@ -96,6 +100,11 @@
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
+                                    @if (auth()->user()->role_id == 2)
+                                    <a class="dropdown-item" href="{{ route('admin.index') }}">
+                                        Back-office
+                                    </a>
+                                @endif
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf

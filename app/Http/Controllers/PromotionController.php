@@ -4,11 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Promotion;
-
-use App\Models\Promotion;
-
 use Validator;
-
 use App\Models\Article;
 
 
@@ -68,14 +64,20 @@ class PromotionController extends Controller
 
         $articles = Article::all();
 
-        for ($i = 1; $i < count($articles); $i++) {
+        // for ($i = 1; $i < count($articles); $i++) {
 
-            if (isset($request['article' . $i])) {
-                $promotion->articles()->attach([$articles[$i]->id]);
+        //     if (isset($request['article' . $i])) {
+        //         $promotion->articles()->attach([$articles[$i]->id]);
+        //     }
+        // }
+
+        foreach ($articles as $article){
+            if (isset($request['article' . $article->id])) {
+                $promotion->articles()->attach([$article->id]);
             }
         }
 
-        return redirect()->route('index')->with('message', 'La nouvel promotion a bien était créé');
+        return redirect()->route('admin.index')->with('message', 'La nouvel promotion a bien était créé');
     }
 
     /**
@@ -156,6 +158,6 @@ class PromotionController extends Controller
     public function destroy(Promotion $promotion)
     {
         $promotion->delete();
-        return redirect()->route('index')->with('message', "La promotion a bien était supprimé");
+        return redirect()->route('admin.index')->with('message', "La promotion a bien était supprimé");
     }
 }

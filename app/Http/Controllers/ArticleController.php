@@ -22,7 +22,7 @@ class ArticleController extends Controller
 
 
             ->get();
-        return view('article', compact('articles'));
+        return view('article.article', compact('articles'));
     }
 
     /**
@@ -81,7 +81,7 @@ class ArticleController extends Controller
      
         // $article->save();
 
-        return redirect()->route('index')->with('message', 'Le nouvel article a bien était créé');
+        return redirect()->route('admin.index')->with('message', 'Le nouvel article a bien était créé');
     }
 
     /**
@@ -92,7 +92,7 @@ class ArticleController extends Controller
      */
     public function show(Article $article) // afficher un article en particulier (afficher une ressource unique)
     {
-        return view('detail', compact('article'));
+        return view('article.detail', compact('article'));
     }
 
     /**
@@ -135,7 +135,7 @@ class ArticleController extends Controller
         // $article->prix = $request['prix'];
         // $article->stock = $request['stock'];
 
-        $article->save();
+        
         return redirect()->back()->with('message', "L'article a bien était modifié");
     }
 
@@ -148,7 +148,7 @@ class ArticleController extends Controller
     public function destroy(Article $article)
     {
         $article->delete();
-        return redirect()->route('index')->with('message', "L'article a bien était supprimé");
+        return redirect()->route('admin.index')->with('message', "L'article a bien était supprimé");
     }
 
     public function populaires(){

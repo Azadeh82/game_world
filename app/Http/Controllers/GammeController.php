@@ -24,7 +24,7 @@ class GammeController extends Controller
         
         ->get();
 
-        return view('gamme', compact('gammes'));
+        return view('gamme/gamme', compact('gammes'));
     }
 
     /**
@@ -43,7 +43,7 @@ class GammeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Gamme $gamme, Request $request)
+    public function store(Request $request)
     {
 
         $request->validate([
@@ -51,9 +51,9 @@ class GammeController extends Controller
             'nom' => 'required|max:30'       
         ]);
 
-        $gamme->nom = $request['nom'];
-        $gamme->save();
-        return redirect()->route('index')->with('message', 'La nouvel gamme a bien était créé');
+        Gamme::create($request->all());
+    
+        return redirect()->route('admin.index')->with('message', 'La nouvel gamme a bien était créé');
 
     }
 
@@ -116,6 +116,6 @@ class GammeController extends Controller
     public function destroy(Gamme $gamme)
     {
         $gamme->delete();
-        return redirect()->route('index')->with('message', 'La gamme a bien était supprimé');
+        return redirect()->route('admin.index')->with('message', 'La gamme a bien était supprimé');
     }
 }

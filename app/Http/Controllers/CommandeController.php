@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Commande;
 use Illuminate\Http\Request;
-use App\Models\Commande;
 use Auth;
 use App\Models\Article;
 

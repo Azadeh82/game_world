@@ -67,7 +67,9 @@ GameWorld - Les Populaires
                     <form action="{{ route('panier.add', $article) }}" method="post">
                         @csrf
                         <input class="form-control mt-3 w-50 mx-auto" type="number" name="quantite"  min="1" max="10" value='1'>
+                        @if ($article->stock !== 0)
                         <input type="submit" value="Ajouter au panier" class="button-62 mt-3">
+                        @endif
                     </form>
                 </div>
             </div>

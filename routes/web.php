@@ -44,10 +44,10 @@ Route::get('panier/empty', [App\Http\Controllers\PanierController::class, 'empty
 
 Route::get('validation', [App\Http\Controllers\PanierController::class, 'validation'])->name('validation');
 
-Route::get('choixadresse', [App\Http\Controllers\PanierController::class, 'choixadresse'])->name('choixadresse');
+Route::post('choixadresse', [App\Http\Controllers\PanierController::class, 'choixadresse'])->name('choixadresse');
 
 Route::post('choixlivraison', [App\Http\Controllers\PanierController::class, 'choixlivraison'])->name('choixlivraison');
 
 // Route dossier admin 
 
-Route::get('admin/index', [App\Http\Controllers\AdminController::class, 'index'])->name('index');
+Route::get('admin/index', [App\Http\Controllers\AdminController::class, 'index'])->name('admin.index');
